@@ -13,7 +13,8 @@
     "react-router-dom": "^6.26.2",
     "framer-motion": "^11.3.24",
     "lucide-react": "^0.424.0",
-    "classnames": "^2.5.1"
+    "classnames": "^2.5.1",
+    "recharts": "^2.12.7"
   },
   "devDependencies": {
     "@types/react": "^18.3.5",
