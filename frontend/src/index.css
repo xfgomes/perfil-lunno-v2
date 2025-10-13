@@ -17,5 +17,6 @@ html, body, #root { height: 100%; }
 body { background: var(--bg); color: var(--ink); }
 
 .app-card { @apply bg-white border border-slate-200 rounded-xl p-4 shadow-soft; }
-.app-badge { @apply inline-flex items-center gap-1 text-xs px-2 py-1 rounded-full bg-lunno.lilac text-lunno.ink; }
-.app-btn { @apply inline-flex items-center justify-center px-4 py-2 rounded-lg bg-lunno.primary text-white hover:opacity-90 transition; }
+.app-badge { @apply bg-lunno-lilac text-lunno-ink; }
+.app-btn { @apply bg-lunno-primary; }
+
