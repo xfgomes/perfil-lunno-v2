@@ -23,9 +23,9 @@ services:
     env_file: .env
     environment:
       DATABASE_URL: ${DATABASE_URL}
-      JWT_SECRET_KEY: ${JWT_SECRET_KEY}
-      OPENAI_API_KEY: ${OPENAI_API_KEY}
-      OPENAI_MODEL: ${OPENAI_MODEL}
+      JWT_SECRET_KEY: 2e1918fc385bea0446fae0d57fd6584f
+      OPENAI_API_KEY: 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
+      OPENAI_MODEL: gpt-4o-mini-2024-07-18
       FRONTEND_URL: ${FRONTEND_URL}
     depends_on:
       db:
