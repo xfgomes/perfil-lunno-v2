@@ -37,23 +37,34 @@ services:
       retries: 10
 
   frontend:
-    build: ./frontend
+    build:
+      context: ./frontend
     restart: always
+    working_dir: /app
+    command: ["npm", "run", "build"]
+    volumes:
+      - frontend_build:/app/dist
     depends_on:
       - backend
-    ports:
-      - "8080:80"
 
   nginx:
     image: nginx:alpine
     restart: always
+    depends_on:
+      - backend
+      - frontend
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - frontend_build:/usr/share/nginx/html
-    depends_on:
-      - frontend
-      - backend
+      - frontend_build:/usr/share/nginx/html:ro
+    networks:
+      - lunno_net
+
 
 volumes:
   db_data:
   frontend_build:
+
+networks:
+  lunno_net:
+    driver: bridge
+
