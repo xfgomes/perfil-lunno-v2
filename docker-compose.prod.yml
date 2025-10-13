@@ -1,4 +1,7 @@
+version: "3.9"
+
 services:
+  # 🗄️ Banco de dados PostgreSQL
   db:
     image: postgres:16
     restart: always
@@ -14,17 +17,14 @@ services:
       interval: 10s
       timeout: 5s
       retries: 10
+    networks:
+      - lunno_net
 
+  # ⚙️ API Flask (Backend)
   backend:
     build: ./backend
     restart: always
     env_file: .env
-    environment:
-      DATABASE_URL: ${DATABASE_URL}
-      JWT_SECRET_KEY: 2e1918fc385bea0446fae0d57fd6584f
-      OPENAI_API_KEY: ${OPENAI_KEY}
-      OPENAI_MODEL: gpt-4o-mini-2024-07-18
-      FRONTEND_URL: ${FRONTEND_URL}
     depends_on:
       db:
         condition: service_healthy
@@ -35,7 +35,10 @@ services:
       interval: 10s
       timeout: 5s
       retries: 10
+    networks:
+      - lunno_net
 
+  # 💻 Frontend React (build feito no Dockerfile)
   frontend:
     build:
       context: ./frontend
@@ -45,29 +48,23 @@ services:
     networks:
       - lunno_net
 
+  # 🌐 Nginx (Proxy e servidor do build do React)
   nginx:
     image: nginx:alpine
     restart: always
-    volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
     depends_on:
       - frontend
       - backend
-    networks:
-      - lunno_net
-
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - frontend_build:/usr/share/nginx/html:ro
     networks:
       - lunno_net
 
-
+# 🔒 Volumes persistentes
 volumes:
   db_data:
-  frontend_build:
 
+# 🌐 Rede compartilhada entre todos os containers
 networks:
   lunno_net:
     driver: bridge
-
