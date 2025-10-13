@@ -1,0 +1,16 @@
+app:
+  name: perfil-lunno-hubx
+  type: compose
+  compose_file: docker-compose.prod.yml
+  env_file: .env
+  services:
+    - name: db
+      volumes:
+        - db_data:/var/lib/postgresql/data
+    - name: backend
+      healthcheck: http://localhost:8000/health
+    - name: nginx
+      domain: SEU-DOMINIO-AQUI
+
+volumes:
+  db_data: {}
